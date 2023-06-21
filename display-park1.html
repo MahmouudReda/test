@@ -1,0 +1,255 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="display-farm.css">
+  <link rel = "icon" href = "assets/c3-removebg-preview.png"
+        type = "image/x-icon">
+	<title>Monitoring SMC</title>
+</head>
+<!-- Modal -->
+
+
+<style>
+
+  .document-container {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.document-container h2 {
+  margin-top: 0;
+}
+  #p1 {
+list-style: none;
+padding: 0;
+font-size: 22px;
+color: red;
+}
+#p2 {
+list-style: none;
+padding: 0;
+font-size: 22px;
+
+color:red;
+}
+#p3 {
+list-style: none;
+padding: 0;
+font-size: 22px;
+color: red;
+}
+#p4 {
+list-style: none;
+padding: 0;
+font-size: 22px;
+
+color:red;
+}
+
+
+#user-list li {
+margin: 10px 0;
+}
+</style>
+
+
+
+<body>
+
+    <nav>
+        <div class="appbar">
+            <div id="logo">
+                <img class="img" src="assets/c3-removebg-preview.png" style="height: auto; width: 150px;">
+                </a>
+            </div>
+            
+            <div id="menue">
+                <ul>
+                    <li>
+                      <button type="button"  class="button-30" onclick="goToPage('login.html')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Log out <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                      </button>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+        </div>
+
+    </nav>
+    <div class="maint">
+      <div class="card" style="width: 27%;">
+       <CENTER> <div class="card-content">
+          <h3 style="font-size: 30px;">Slots - 1</h3>
+          <img src="assets/park1.png" alt="Image 1" style="width: 150px;">
+          <h3><ul id="p1"></ul></h3>
+  
+        </div> </CENTER>
+      </div> 
+  
+      <div class="card" style="width: 27%;">
+       <CENTER> <div class="card-content">
+        <h3 style="font-size: 30px;">Slots - 2</h3>
+        <img src="assets/park1.png" alt="Image 1" style="width: 150px;">
+        <h3><ul id="p2"></ul></h3>
+        </div></CENTER>
+      </div>
+
+      <div class="card" style="width: 27%;">
+        <CENTER> <div class="card-content">
+         <h3 style="font-size: 30px;">Slots - 3</h3>
+         <img src="assets/park1.png" alt="Image 1" style="width: 150px;">
+         <h3><ul id="p3"></ul></h3>
+         </div></CENTER>
+       </div>
+
+       <div class="card" style="width: 27%;">
+        <CENTER> <div class="card-content">
+         <h3 style="font-size: 30px;">Slots - 4</h3>
+         <img src="assets/park1.png" alt="Image 1" style="width: 150px;">
+         <h3><ul id="p4"></ul></h3>
+         </div></CENTER>
+       </div>
+    </div>
+</body>
+    
+    
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+<script type="module">
+  const firebaseConfig = {
+    apiKey: "AIzaSyCf3FJXVeM1SDA8YWQWR1EOK8OzOwah3fQ",
+    authDomain: "smc-iot-ae076.firebaseapp.com",
+    projectId: "smc-iot-ae076",
+    storageBucket: "smc-iot-ae076.appspot.com",
+    messagingSenderId: "499857190819",
+    appId: "1:499857190819:web:b8d5e0125071db946b7416",
+    measurementId: "G-3FF6TKR841"
+  };
+  
+    firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+  
+      const documentPath = '/users/87KdcdfQulP1sE14AXlTaTQHB8n1/field/Smart Parking/esp-nodes/esp-1/slots/statues'; // Replace with the actual document path
+  
+  // Get a reference to the document
+  const documentRef = firebase.firestore().doc(documentPath);
+  ``
+  // Retrieve the document data
+  documentRef.get().then((doc) => {
+    if (doc.exists) {
+      const documentData = doc.data();
+      const fieldValues = Object.values(documentData);
+   // Output the values of the fields
+  
+   
+   if(fieldValues[0] == '0'){
+    const userList = document.getElementById('p1');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="Available-Slot";
+            userList.appendChild(li);
+      }
+    else {
+      const userList = document.getElementById('p1');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="unAvailable-Slot";
+            userList.appendChild(li);
+    }
+    if(fieldValues[0] == '0'){
+    const userList = document.getElementById('p2');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="Available-Slot";
+            userList.appendChild(li);
+      }
+    else {
+      const userList = document.getElementById('p2');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="unAvailable-Slot";
+            userList.appendChild(li);
+    }
+    if(fieldValues[1] == '0'){
+    const userList = document.getElementById('p3');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="Available-Slot";
+            userList.appendChild(li);
+      }
+    else {
+      const userList = document.getElementById('p3');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="unAvailable-Slot";
+            userList.appendChild(li);
+    }
+    if(fieldValues[2] == '0'){
+    const userList = document.getElementById('p4');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="Available-Slot";
+            userList.appendChild(li);
+      }
+    else {
+      const userList = document.getElementById('p4');
+          userList.innerHTML = '';
+          const user = doc.data();
+  
+            const li = document.createElement('li');
+            li.innerText="unAvailable-Slot";
+            userList.appendChild(li);
+    }
+  
+  
+  }  
+  });
+  
+  
+  
+  
+  </script>
+
+   
+    
+
+</body>
+
+
+<script>
+
+  function goToPage(url) {
+    window.location.href = url;
+  }
+  
+  </script>
+
+
+</html>
+
+
